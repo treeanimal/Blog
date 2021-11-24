@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="admin_sidebar">
+    <!-- Sidebar-->
+    <div class="bg-white" id="sidebar-wrapper">
+<!--        border-end-->
+        <div class="sidebar-heading bg-white">Admin</div>
+<!--        border-bottom-->
+        <div class="list-group list-group-flush fw-bolder">
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" style="border: none" href="/admin/category">카테고리 관리</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" style="border: none" href="/admin/post">글 관리</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" style="border: none" href="#!">Overview</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" style="border: none" href="#!">Events</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" style="border: none" href="#!">Profile</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" style="border: none" href="#!">Status</a>
+        </div>
+    </div>
+</div>
+<div th:fragment="admin_top">
+    <!-- Top navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+<!--        border-bottom-->
+        <div class="container-fluid" >
+<!--            <button class="btn btn-primary" id="sidebarToggle">Toggle Menu</button>-->
+            <div class="" style="font-size:26px; font-family: OTWelcomeRA; font-weight:bold"><i class="bi bi-vector-pen">  </i>Sloth's Blog</div>
+<!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"-->
+<!--                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"-->
+<!--                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>-->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                    <li class="nav-item active"><a class="nav-link" th:href="@{/admin/post/new}">글쓰기</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+</html>
