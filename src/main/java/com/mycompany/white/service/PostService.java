@@ -18,5 +18,7 @@ public interface PostService {
 
     void deletePost(Post post);
 
+    Post findPostJoinCategory(Long postId);
+
     List<Post> findPostByCategoryName(String categoryName);
 }

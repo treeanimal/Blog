@@ -17,9 +17,11 @@ public class Category extends BaseTimeEntity{
     @Id
     @Column(name = "category_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     private String name;
     private int orderNum;
+    @OneToMany(mappedBy = "category")
+    private List<Post> posts = new ArrayList<>();
 
 
     @Builder

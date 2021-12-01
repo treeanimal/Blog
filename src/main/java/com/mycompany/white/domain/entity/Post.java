@@ -1,7 +1,8 @@
 package com.mycompany.white.domain.entity;
 
-import com.mycompany.white.domain.dto.PostDto;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 

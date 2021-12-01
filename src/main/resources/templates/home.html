@@ -4,8 +4,13 @@
 <head th:replace="layout/head::header"></head>
 
 <body>
-    <div th:replace="layout/top::top"></div>
-    <h1>Hello World!</h1>
+<div class="d-flex" id="wrapper">
+    <div th:replace="layout/sidebar::home_sidebar"></div>
+    <div id="page-content-wrapper">
+        <div th:replace="layout/sidebar::home_top"></div>
+        <h1>Hello World!!</h1>
+    </div>
+</div>
 </body>
 
 </html>

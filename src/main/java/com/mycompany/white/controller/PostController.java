@@ -70,7 +70,6 @@ public class PostController {
         res.setContentType("text/html;charset=utf-8");
 
         try{
-
             UUID uuid = UUID.randomUUID();
             String extension = FilenameUtils.getExtension(upload.getOriginalFilename());
 

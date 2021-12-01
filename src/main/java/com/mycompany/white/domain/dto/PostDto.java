@@ -27,7 +27,6 @@ public class PostDto {
     @Autowired
     private ModelMapper modelMapper;
 
-    //== 연관관계 메서드 ==//
     public void setCategory(Category category){
         CategoryDto categoryDto = new CategoryDto();
         categoryDto.setName(category.getName());
