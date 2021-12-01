@@ -18,6 +18,7 @@ public class CategoryDto {
     private Long id;
     private String name;
     private int orderNum;
+    private int postNum;
 
     //== 연관관계 메서드 ==//
 //    public void addPost(Post post){

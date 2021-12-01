@@ -21,7 +21,7 @@
           </thead>
           <tbody>
             <tr th:each="category : ${categories}">
-              <th scope="row"><a class="text-decoration-none link-dark" th:text="${category.name}" th:href="@{/admin/category/update/{id} (id=${category.id})}">JAVA</a> </th>
+              <th scope="row"><a class="text-decoration-none link-dark" th:text="${category.name}" th:href="@{/admin/category/update/{id} (id=${category.id})}">JAVA</a></th>
               <td><a class="text-decoration-none link-dark" th:text="${category.orderNum}" th:href="@{/admin/category/update/{id} (id=${category.id})}">순서</a></td>
               <td><button type="button" class="btn btn-light btn-sm" ><a class="text-decoration-none link-dark" th:href="@{/admin/category/delete/{id} (id=${category.id})}">삭제</a></button></td>
             </tr>

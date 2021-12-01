@@ -36,7 +36,7 @@ public class PostImpl implements PostService {
 
     @Override
     public Post findPost(Long postId) {
-        Post findPost = postRepository.findPostById(postId).orElse(null);
+        Post findPost = postRepository.findById(postId).orElse(null);
         if (findPost == null) throw new NullPointerException("유효한 접근이 아니거나 해당 게시물이 삭제되었습니다.");
         else return findPost;
     }
@@ -54,6 +54,13 @@ public class PostImpl implements PostService {
     @Override
     public void deletePost(Post post) {
         postRepository.delete(post);
+    }
+
+    @Override
+    public Post findPostJoinCategory(Long postId) {
+        Post findPost = postRepository.findPostJoinCategory(postId).orElse(null);
+        if (findPost == null) throw new NullPointerException("유효한 접근이 아니거나 해당 게시글이 삭제되었습니다.");
+        else return findPost;
     }
 
     @Override
