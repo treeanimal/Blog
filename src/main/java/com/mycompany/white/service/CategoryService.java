@@ -11,6 +11,8 @@ public interface CategoryService {
 
     List<Category> findAllCategory();
 
+    List<CategoryDto> findAllCategoryJoinPost();
+
     Category findCategory(Long categoryId);
 
     void updateCategory(Long categoryId, Category category);

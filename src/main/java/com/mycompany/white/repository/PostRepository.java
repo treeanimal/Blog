@@ -20,4 +20,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("select p from Post p join fetch p.category c where c.name = :name")
     List<Post> findPostByCategoryName(@Param("name") String categoryName);
+
+
 }

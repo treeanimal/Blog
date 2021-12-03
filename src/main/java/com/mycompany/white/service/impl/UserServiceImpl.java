@@ -5,6 +5,7 @@ import com.mycompany.white.domain.entity.User;
 import com.mycompany.white.domain.entity.UserRole;
 import com.mycompany.white.repository.RoleRepository;
 import com.mycompany.white.repository.UserRepository;
+import com.mycompany.white.repository.UserRoleRepository;
 import com.mycompany.white.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final UserRoleRepository userRoleRepository;
 
     @Override
     @Transactional
@@ -37,5 +39,6 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         userRepository.save(user);
+        userRoleRepository.save(userRole);
     }
 }

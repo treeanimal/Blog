@@ -15,33 +15,27 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    @Autowired private UserDetailsService userDetailsService;
+    @Autowired private AuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    @Autowired private AuthenticationFailureHandler customAuthenticationFailureHandler;
 
+    // CustomProvider 등록
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
 
-    public AuthenticationProvider authenticationProvider(){
-        return new CustomAuthenticationProvider();
-    }
-
-    // 정적 자원 관리
+    // 정적 자원 허용
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-    }
-
-    // 패스워드 암호화
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Override
@@ -52,8 +46,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
         .and()
-                .formLogin();
-//                .loginPage("/login")
-//                .loginProcessingUrl("/login_proc");
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/login_proc")
+                .defaultSuccessUrl("/")
+                .successHandler(customAuthenticationSuccessHandler)
+//                .failureHandler(customAuthenticationFailureHandler)
+                .permitAll();
     }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider(){
+        return new CustomAuthenticationProvider();
+    }
+
+    // 패스워드 암호화
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.mycompany.white.service.impl;
 
+import com.mycompany.white.domain.dto.CategoryDto;
 import com.mycompany.white.domain.entity.Category;
 import com.mycompany.white.domain.entity.Post;
 import com.mycompany.white.repository.CategoryRepository;
@@ -28,6 +29,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> findAllCategory() {
         return categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "orderNum"));
+    }
+
+    @Override
+    public List<CategoryDto> findAllCategoryJoinPost() {
+        return categoryRepository.findAllCategoryJoinPost();
     }
 
     @Override

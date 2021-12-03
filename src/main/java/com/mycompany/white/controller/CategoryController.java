@@ -23,10 +23,12 @@ public class CategoryController {
 
     @GetMapping("/admin/category")
     public String category(Model model) {
-        List<Category> findCategories = categoryService.findAllCategory();
-        List<CategoryDto> categoryDtos = findCategories.stream().map(c -> new CategoryDto(c)).collect(Collectors.toList());
+//        List<Category> findCategories = categoryService.findAllCategory();
+//        List<CategoryDto> categoryDtos = findCategories.stream().map(c -> new CategoryDto(c)).collect(Collectors.toList());
 
-        model.addAttribute("categories", categoryDtos);
+        List<CategoryDto> findCategory = categoryService.findAllCategoryJoinPost();
+
+        model.addAttribute("categories", findCategory);
         return "admin/category/adminCategoryList";
     }
 

@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -20,6 +20,9 @@ public class Role {
     private Long id;
     private String roleName;
     private String roleDesc;
+
+    @OneToMany(mappedBy = "role")
+    private Set<UserRole> userRoles = new HashSet<>();
 
     @Builder
     public Role(String roleName, String roleDesc) {

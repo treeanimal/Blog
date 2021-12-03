@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <div th:fragment="home_sidebar">
-    <!-- Sidebar-->
+    <!-- Sidebar -->
     <div class="bg-white" id="sidebar-wrapper">
-        <!--        border-end-->
-        <div class="sidebar-heading bg-white">Category</div>
-        <!--        border-bottom-->
-        <div class="list-group list-group-flush fw-bolder">
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" style="border: none"
-               href="/admin/category">카테고리 관리</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" style="border: none"
-               href="/admin/post">글 관리</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" style="border: none" href="#!">Overview</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" style="border: none" href="#!">Events</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" style="border: none" href="#!">Profile</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" style="border: none" href="#!">Status</a>
-        </div>
+        <!-- border-end -->
+        <div class="sidebar-heading bg-white fw-bold" style="margin-bottom:50px">Category</div>
+        <!-- border-bottom -->
+        <ul class="list-group" th:each="category : ${categories}">
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3" style="border-right:none; border-left:none; border-top:none; border-bottom:none">
+                <a class="fw-bold" th:text="${category.name}" style="text-decoration:none; color:black;" th:href="@{/admin/category/update/{id} (id=${category.id})}"></a>
+                 <span class="badge bg-primary rounded-pill" th:text="${category.postNum}"></span>
+            </li>
+        </ul>
+<!--        <div class="list-group list-group-flush fw-bolder" th:each="category : ${categories}">-->
+<!--            <a th:text="${category.name}" class="list-group-item list-group-item-action list-group-item-light p-3" style="border: none" th:href="@{/admin/category/update/{id} (id=${category.id})}">( <a th:text="${category.postNum}"></a> )</a>-->
+<!--        </div>-->
     </div>
 </div>
 <div th:fragment="home_top">
-    <!-- Top navigation-->
+    <!-- Top navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
-        <!--        border-bottom-->
+        <!-- border-bottom -->
         <div class="container-fluid">
             <button class="btn" id="sidebarToggle"><i class="bi bi-list"></i></button>
             <div class="" style="font-size:26px; font-family: OTWelcomeRA; font-weight:bold">
@@ -34,7 +34,10 @@
                     aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                    <li class="nav-item active"><a class="nav-link" th:href="@{/admin/}">관리자</a></li>
+                    <li class="nav-item active"><a class="nav-link" th:href="@{/admin}">관리자</a></li>
+                    <li class="nav-item active" sec:authorize="isAnonymous()"><a class="nav-link" th:href="@{/login}">로그인</a></li>
+                    <li class="nav-item active" sec:authorize="isAuthenticated()"><a class="nav-link" th:href="@{/logout}">로그아웃</a></li>
+                    <li class="nav-item active" sec:authorize="isAnonymous()"><a class="nav-link" th:href="@{/register}">회원가입</a></li>
                 </ul>
             </div>
         </div>

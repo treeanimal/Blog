@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class PostImpl implements PostService {
+public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final CategoryService categoryService;

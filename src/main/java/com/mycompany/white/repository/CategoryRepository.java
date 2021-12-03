@@ -12,5 +12,14 @@ import java.util.List;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
 
-//    List<CategoryDto> findCategory
+//    @Query("select new com.mycompany.white.domain.dto.CategoryDto (c.id, c.name, c.orderNum, count(p.id) as postNum) " +
+//            "from Category c " +
+//            "left outer join find_pill.post as p on c.id = p.category_id" +
+//            "group by c.id order by c.orderNum asc")
+//    List<CategoryDto> findAllCategoryJoinPost();
+
+    @Query("select new com.mycompany.white.domain.dto.CategoryDto (c.id, c.name, c.orderNum, count(p.id) as postNum) " +
+            "from Category c left outer join c.posts p " +
+            "group by c.id order by c.orderNum asc")
+    List<CategoryDto> findAllCategoryJoinPost();
 }
