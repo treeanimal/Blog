@@ -10,7 +10,23 @@
         <div th:replace="admin/layout/sidebar::admin_top"></div>
 
         <div class="container" style="margin-top: 30px">
-            <h3>글 관리</h3>
+            <div style="float:left">
+                <h3>글 관리</h3>
+            </div>
+            <div style="float:right; display:inline-block">
+                <form th:action="@{/admin/post}" method="get">
+                    <div style="float:left; margin-right:5px">
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" th:name="categoryName">
+                            <option selected>전체</option>
+                            <option th:each="category : ${categories}" th:value="${category.name}" th:utext="${category.name}">One</option>
+                        </select>
+                    </div>
+                    <div style="float:right; display:inline-block">
+                        <button type="submit" class="btn btn-dark btn-sm">검색</button>
+                    </div>
+                </form>
+            </div>
+
             <table class="table">
                 <thead class="table-dark">
                 <tr>
@@ -32,8 +48,12 @@
                            th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm')}">2021-11-22 17:48</a>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-light btn-sm" ><a class="text-decoration-none link-dark" th:href="@{/admin/post/update/{id} (id=${post.id})}">수정</a></button>
-                        <button class="btn btn-light btn-sm"><a class="text-decoration-none link-dark" th:href="@{/admin/post/delete/{id} (id=${post.id})}">삭제</a></button>
+                        <button type="button" class="btn btn-light btn-sm"><a class="text-decoration-none link-dark"
+                                                                              th:href="@{/admin/post/update/{id} (id=${post.id})}">수정</a>
+                        </button>
+                        <button class="btn btn-light btn-sm"><a class="text-decoration-none link-dark"
+                                                                th:href="@{/admin/post/delete/{id} (id=${post.id})}">삭제</a>
+                        </button>
                     </td>
                 </tr>
                 </tbody>

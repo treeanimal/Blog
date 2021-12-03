@@ -1,15 +1,17 @@
 package com.mycompany.white.listener;
 
-import com.mycompany.white.domain.entity.Category;
-import com.mycompany.white.domain.entity.Post;
-import com.mycompany.white.domain.entity.Role;
+import com.mycompany.white.domain.entity.*;
+import com.mycompany.white.repository.UserRepository;
+import com.mycompany.white.repository.UserRoleRepository;
 import com.mycompany.white.service.CategoryService;
 import com.mycompany.white.service.PostService;
 import com.mycompany.white.service.RoleService;
+import com.mycompany.white.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -22,6 +24,9 @@ public class SetUpDataLoader implements ApplicationListener<ContextRefreshedEven
     private final CategoryService categoryService;
     private final PostService postService;
     private final RoleService roleService;
+    private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -60,5 +65,16 @@ public class SetUpDataLoader implements ApplicationListener<ContextRefreshedEven
         roleService.saveRole(role_user);
         roleService.saveRole(role_admin);
 
+        UserRole userRole = UserRole.builder()
+                .role(role_admin)
+                .build();
+        User user = User.builder()
+                .userRole(userRole)
+                .email("seo970713@naver.com")
+                .password(passwordEncoder.encode("qwe123"))
+                .build();
+
+        userRepository.save(user);
+        userRoleRepository.save(userRole);
     }
 }

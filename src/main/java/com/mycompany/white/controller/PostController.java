@@ -1,5 +1,6 @@
 package com.mycompany.white.controller;
 
+import com.mycompany.white.domain.dto.CategoryDto;
 import com.mycompany.white.domain.dto.PostDto;
 import com.mycompany.white.domain.entity.Category;
 import com.mycompany.white.domain.entity.Post;
@@ -42,11 +43,24 @@ public class PostController {
     private ModelMapper modelMapper;
 
     @GetMapping("/admin/post")
-    public String post(Model model){
-        List<Post> findPosts = postService.findAllPost();
-        List<PostDto> postDtos = findPosts.stream().map(p -> new PostDto(p)).collect(Collectors.toList());
+    public String post(Model model, @RequestParam(name = "categoryName", required = false) String categoryName){
 
-        model.addAttribute("posts", postDtos);
+        if (categoryName == null || categoryName.equals("전체")){
+            List<Post> findPosts = postService.findAllPost();
+            List<PostDto> postDtos = findPosts.stream().map(p -> new PostDto(p)).collect(Collectors.toList());
+            model.addAttribute("posts", postDtos);
+        }
+        else{
+            List<Post> findPosts = postService.findPostByCategoryName(categoryName);
+            List<PostDto> postDtos = findPosts.stream().map(p -> new PostDto(p)).collect(Collectors.toList());
+            model.addAttribute("posts", postDtos);
+        }
+
+        List<Category> findCategories = categoryService.findAllCategory();
+        List<CategoryDto> categoryDtos = findCategories.stream().map(c -> new CategoryDto(c)).collect(Collectors.toList());
+
+        model.addAttribute("categories", categoryDtos);
+
         return "admin/post/adminPostList";
     }
 
