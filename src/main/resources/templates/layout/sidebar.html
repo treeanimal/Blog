@@ -4,7 +4,7 @@
 
 <div th:fragment="home_sidebar">
     <!-- Sidebar -->
-    <div class="bg-white" id="sidebar-wrapper">
+    <div class="bg-white" id="sidebar-wrapper" style="font-family: OTWelcomeRA; font-weight:bold">
         <!-- border-end -->
         <div class="sidebar-heading bg-white fw-bold" style="margin-bottom:50px">Category</div>
         <!-- border-bottom -->
@@ -26,13 +26,13 @@
         <div class="container-fluid">
             <button class="btn" id="sidebarToggle"><i class="bi bi-list"></i></button>
             <div class="" style="font-size:26px; font-family: OTWelcomeRA; font-weight:bold">
-                <i class="bi bi-vector-pen"> </i>Sloth's Blog
+                <i class="bi bi-vector-pen"> </i><a class="text-decoration-none link-dark" href="/">Sloth's Blog</a>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false"
                     aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-family: OTWelcomeRA; font-weight:bold">
                 <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                     <li class="nav-item active"><a class="nav-link" th:href="@{/admin}">관리자</a></li>
                     <li class="nav-item active" sec:authorize="isAnonymous()"><a class="nav-link" th:href="@{/login}">로그인</a></li>

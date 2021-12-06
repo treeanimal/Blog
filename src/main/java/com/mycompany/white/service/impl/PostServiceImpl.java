@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,13 +20,32 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final CategoryService categoryService;
 
-
     @Override
     public void savePost(Long categoryId,String title, String content) {
         Category category = categoryService.findCategory(categoryId);
 
         Post post = Post.createPost(title, content, category);
         postRepository.save(post);
+    }
+
+    @Override
+    public List<PostDto> findAll() {
+        List<Post> posts = postRepository.findAll();
+
+        List<PostDto> postDtos = new ArrayList<>();
+        List<Post> newPosts = new ArrayList<>();
+        for (Post p : posts){
+            PostDto postDto = new PostDto();
+            postDto.setId(p.getId());
+            postDto.setTitle(p.getTitle());
+            postDto.setCategory(p.getCategory());
+            postDto.setContent( p.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""));
+//            postDtos.add(PostDto.createPostDto(p));
+//            newPosts.add(Post.createPost(p.getTitle(), p.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""), p.getCategory()));
+            postDtos.add(postDto);
+        }
+
+        return postDtos;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.mycompany.white.controller;
 
 import com.mycompany.white.domain.dto.UserDto;
-import com.mycompany.white.service.RoleService;
+import com.mycompany.white.domain.entity.User;
 import com.mycompany.white.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -63,6 +63,16 @@ public class UserController {
         }
 
         return "redirect:/login";
+    }
+
+    @GetMapping("/denied")
+    public String accessDenied(@RequestParam(value = "exception", required = false) String exception, Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        model.addAttribute("email", user.getEmail());
+        model.addAttribute("exception", exception);
+
+        return "user/denied";
     }
 
 }

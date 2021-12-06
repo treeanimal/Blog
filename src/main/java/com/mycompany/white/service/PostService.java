@@ -10,6 +10,8 @@ public interface PostService {
 
     void savePost(Long categoryId, String title, String content);
 
+    List<PostDto> findAll();
+
     List<Post> findAllPost();
 
     Post findPost(Long postId);
