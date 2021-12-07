@@ -1,6 +1,7 @@
 package com.mycompany.white.controller;
 
 import com.mycompany.white.domain.dto.CategoryDto;
+import com.mycompany.white.domain.dto.PaginationBean;
 import com.mycompany.white.domain.dto.PostDto;
 import com.mycompany.white.domain.entity.Category;
 import com.mycompany.white.domain.entity.Post;
@@ -11,6 +12,10 @@ import org.apache.commons.io.FilenameUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,17 +48,21 @@ public class PostController {
     private ModelMapper modelMapper;
 
     @GetMapping("/admin/post")
-    public String post(Model model, @RequestParam(name = "categoryName", required = false) String categoryName){
+    public String post(Model model,
+                       @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                       @RequestParam(name = "category", required = false) String categoryName){
 
         if (categoryName == null || categoryName.equals("전체")){
             List<Post> findPosts = postService.findAllPost();
+            PaginationBean page = new PaginationBean(findPosts.size(), pageable.getPageNumber(), 10, 10);
             List<PostDto> postDtos = findPosts.stream().map(p -> new PostDto(p)).collect(Collectors.toList());
             model.addAttribute("posts", postDtos);
         }
         else{
-            List<Post> findPosts = postService.findPostByCategoryName(categoryName);
-            List<PostDto> postDtos = findPosts.stream().map(p -> new PostDto(p)).collect(Collectors.toList());
-            model.addAttribute("posts", postDtos);
+            List<PostDto> allPostDtos = postService.findPostByCategoryName(categoryName, pageable);
+//            List<PostDto> postDtos = findPosts.stream().map(p -> new PostDto(p)).collect(Collectors.toList());
+            PaginationBean page = new PaginationBean(allPostDtos.size(), pageable.getPageNumber(), 10, 10);
+            model.addAttribute("posts", allPostDtos);
         }
 
         List<Category> findCategories = categoryService.findAllCategory();

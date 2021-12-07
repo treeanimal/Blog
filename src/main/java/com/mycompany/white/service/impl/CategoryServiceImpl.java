@@ -7,6 +7,7 @@ import com.mycompany.white.repository.CategoryRepository;
 import com.mycompany.white.repository.PostRepository;
 import com.mycompany.white.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +58,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategory(Category category) {
-        List<Post> countPost = postRepository.findPostByCategoryName(category.getName());
+        List<Post> countPost = postRepository.findAllPostByCategoryName(category.getName());
         if (countPost.size() > 0 ) throw new NullPointerException("해당 카테고리에 게시글이 존재합니다.");
         else categoryRepository.delete(category);
     }

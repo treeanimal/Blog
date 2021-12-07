@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class PostDto {
 
+    @Column(name = "post_id")
     private Long id;
     private String title;
     private String content;
@@ -42,4 +44,16 @@ public class PostDto {
         this.modifiedDate = post.getModifiedDate();
         setCategory(post.getCategory());
     }
+
+    public static PostDto createPostDto(Post post){
+        PostDto postDto = new PostDto();
+        postDto.setId(post.getId());
+        postDto.setTitle(postDto.getTitle());
+        postDto.setContent(postDto.getContent());
+        postDto.setCreatedDate(post.getCreatedDate());
+
+        return postDto;
+    }
+
+
 }

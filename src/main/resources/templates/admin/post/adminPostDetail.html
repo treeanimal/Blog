@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="admin/layout/admin_head::admin_header"></head>
+<head th:replace="layout/head::header"></head>
 
 <body>
 <div class="d-flex" id="wrapper">
-    <div th:replace="admin/layout/sidebar::admin_sidebar"></div>
+<!--    <div th:replace="layout/sidebar::home_sidebar"></div>-->
     <div id="page-content-wrapper">
-        <div th:replace="admin/layout/sidebar::admin_top"></div>
+        <div th:replace="layout/sidebar::home_top"></div>
         <div class="container">
-            <div style="border-bottom: 1px solid #dcdcdc; padding-bottom: 20px; margin-top: 50px; margin-bottom: 60px">
+            <div style="border-bottom: 1px solid #dcdcdc; padding-bottom: 40px; margin-top: 50px; margin-bottom: 60px">
                 <h1 class="fw-bolder" th:text="*{post.title}" >제목</h1>
+                <div style="float:left; color:gray; font-size:13px"><a th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm')}"/><a> | </a>
+                    <a class="text-decoration-none link-dark" th:href="@{/admin/post/update/{id} (id=${post.id})}">수정</a><a> |</a>
+                    <a class="text-decoration-none link-dark" th:href="@{/admin/post/delete/{id} (id=${post.id})}">삭제</a></div>
             </div>
             <label th:utext="${post.content}">내용</label>
         </div>

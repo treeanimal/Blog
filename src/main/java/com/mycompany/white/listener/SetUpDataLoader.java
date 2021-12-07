@@ -49,9 +49,22 @@ public class SetUpDataLoader implements ApplicationListener<ContextRefreshedEven
         categoryService.saveCategory(category2);
         categoryService.saveCategory(category3);
 
-        Post post = Post.createPost("제목입니다.", "내용입니다.", category1);
+        for (int i = 0; i < 50; i++){
+            Post post = Post.createPost("JAVA"+i, "내용입니다.", category1);
 
-        postService.savePost(post.getCategory().getId(), post.getTitle(), post.getContent());
+            postService.savePost(post.getCategory().getId(), post.getTitle(), post.getContent());
+        }
+
+        for (int i = 0; i < 55; i++){
+            Post post = Post.createPost("공지사항"+i, "내용입니다.", category2);
+
+            postService.savePost(post.getCategory().getId(), post.getTitle(), post.getContent());
+        }
+        for (int i = 0; i < 61; i++){
+            Post post = Post.createPost("JPA"+i, "내용입니다.", category3);
+
+            postService.savePost(post.getCategory().getId(), post.getTitle(), post.getContent());
+        }
 
         Role role_user = Role.builder()
                 .roleName("ROLE_USER")
