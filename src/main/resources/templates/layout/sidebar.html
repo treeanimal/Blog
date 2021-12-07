@@ -10,13 +10,10 @@
         <!-- border-bottom -->
         <ul class="list-group" th:each="category : ${categories}">
             <li class="list-group-item d-flex justify-content-between align-items-center p-3" style="border-right:none; border-left:none; border-top:none; border-bottom:none">
-                <a class="fw-bold" th:text="${category.name}" style="text-decoration:none; color:black;" th:href="@{/admin/category/update/{id} (id=${category.id})}"></a>
+                <a class="fw-bold" th:text="${category.name}" style="text-decoration:none; color:black;" th:href="@{/?category={name} (name=${category.name})}"></a>
                  <span class="badge bg-primary rounded-pill" th:text="${category.postNum}"></span>
             </li>
         </ul>
-<!--        <div class="list-group list-group-flush fw-bolder" th:each="category : ${categories}">-->
-<!--            <a th:text="${category.name}" class="list-group-item list-group-item-action list-group-item-light p-3" style="border: none" th:href="@{/admin/category/update/{id} (id=${category.id})}">( <a th:text="${category.postNum}"></a> )</a>-->
-<!--        </div>-->
     </div>
 </div>
 <div th:fragment="home_top">

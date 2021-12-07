@@ -50,6 +50,7 @@ public class PostDto {
         postDto.setId(post.getId());
         postDto.setTitle(postDto.getTitle());
         postDto.setContent(postDto.getContent());
+        postDto.setCreatedDate(post.getCreatedDate());
 
         return postDto;
     }

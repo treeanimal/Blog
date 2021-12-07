@@ -1,5 +1,6 @@
 package com.mycompany.white.service.impl;
 
+import com.mycompany.white.domain.dto.PaginationBean;
 import com.mycompany.white.domain.dto.PostDto;
 import com.mycompany.white.domain.entity.Category;
 import com.mycompany.white.domain.entity.Post;
@@ -7,11 +8,15 @@ import com.mycompany.white.repository.PostRepository;
 import com.mycompany.white.service.CategoryService;
 import com.mycompany.white.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,21 +34,20 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> findAll() {
-        List<Post> posts = postRepository.findAll();
+    public List<PostDto> findAll(Pageable pageable) {
+        Page<Post> posts = postRepository.findAll(pageable);
+        postRepository.findAll(pageable);
 
         List<PostDto> postDtos = new ArrayList<>();
-        List<Post> newPosts = new ArrayList<>();
         for (Post p : posts){
             PostDto postDto = new PostDto();
             postDto.setId(p.getId());
             postDto.setTitle(p.getTitle());
-            postDto.setCategory(p.getCategory());
             postDto.setContent( p.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""));
-//            postDtos.add(PostDto.createPostDto(p));
-//            newPosts.add(Post.createPost(p.getTitle(), p.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""), p.getCategory()));
+            postDto.setCreatedDate(p.getCreatedDate());
             postDtos.add(postDto);
         }
+
 
         return postDtos;
     }
@@ -84,7 +88,37 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> findPostByCategoryName(String categoryName) {
-        return postRepository.findPostByCategoryName(categoryName);
+    public List<PostDto> findPostByCategoryName(String categoryName, Pageable pageable) {
+
+        Page<Post> findPosts = postRepository.findPostByCategoryName(categoryName, pageable);
+        List<PostDto> postDtos = new ArrayList<>();
+        for (Post p : findPosts){
+            PostDto postDto = new PostDto();
+            postDto.setTitle(p.getTitle());
+            postDto.setContent(p.getContent());
+            postDto.setCreatedDate(p.getCreatedDate());
+
+            postDtos.add(postDto);
+
+        }
+        return postDtos;
     }
+
+    @Override
+    public List<PostDto> findPostByCategoryId(Long categoryId, Pageable pageable) {
+        Page<Post> findPosts = postRepository.findPostByCategoryId(categoryId, pageable);
+        List<PostDto> postDtos = new ArrayList<>();
+        for (Post p : findPosts){
+            PostDto postDto = new PostDto();
+            postDto.setTitle(p.getTitle());
+            postDto.setContent(p.getContent());
+            postDto.setCreatedDate(p.getCreatedDate());
+
+            postDtos.add(postDto);
+
+        }
+        return postDtos;
+    }
+
+
 }
